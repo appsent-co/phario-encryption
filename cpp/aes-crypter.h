@@ -10,14 +10,14 @@ typedef struct {
 
 class AESCrypter {
 private:
-    unsigned char key[32];
-    unsigned char iv[16];
+    uint8_t key[32];
+    uint8_t iv[16];
 
 public:
-    AESCrypter(unsigned char input_key[32], unsigned char input_iv[16]);
+    AESCrypter(uint8_t input_key[32], uint8_t input_iv[16]);
 
-    AESCrypterOutput encrypt(const unsigned char *input, const int input_len);
-    AESCrypterOutput decrypt(const unsigned char *input, const int input_len);
+    AESCrypterOutput encrypt(const uint8_t *input, const int input_len);
+    AESCrypterOutput decrypt(const uint8_t *input, const int input_len);
 };
 
 #endif //DFS_SSL_CRYPTER_H

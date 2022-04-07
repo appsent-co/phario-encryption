@@ -3,12 +3,12 @@
 #include <openssl/aes.h>
 #include <openssl/evp.h>
 
-AESCrypter::AESCrypter(unsigned char input_key[32], unsigned char input_iv[16]) {
+AESCrypter::AESCrypter(uint8_t input_key[32], uint8_t input_iv[16]) {
     std::memcpy(key, input_key, sizeof(key));
     std::memcpy(iv, input_iv, sizeof(iv));
 }
 
-AESCrypterOutput AESCrypter::encrypt(const unsigned char *input, const int input_len) {
+AESCrypterOutput AESCrypter::encrypt(const uint8_t *input, const int input_len) {
     EVP_CIPHER_CTX *ctx;
 
     AESCrypterOutput output;
@@ -54,7 +54,7 @@ AESCrypterOutput AESCrypter::encrypt(const unsigned char *input, const int input
     return output;
 }
 
-AESCrypterOutput AESCrypter::decrypt(const unsigned char *input, const int input_len) {
+AESCrypterOutput AESCrypter::decrypt(const uint8_t *input, const int input_len) {
     EVP_CIPHER_CTX *ctx;
 
     AESCrypterOutput output;
