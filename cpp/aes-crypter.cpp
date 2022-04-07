@@ -1,16 +1,11 @@
 #include "aes-crypter.h"
 
-#include <openssl/err.h>
 #include <openssl/aes.h>
-#include <openssl/conf.h>
+#include <openssl/evp.h>
 
-#include <random>
-
-using namespace std;
-
-AESCrypter::AESCrypter(unsigned char input_key[32], unsigned char input_iv[32]) {
-    memcpy(key, input_key, sizeof(key));
-    memcpy(iv, input_iv, sizeof(iv));
+AESCrypter::AESCrypter(unsigned char input_key[32], unsigned char input_iv[16]) {
+    std::memcpy(key, input_key, sizeof(key));
+    std::memcpy(iv, input_iv, sizeof(iv));
 }
 
 AESCrypterOutput AESCrypter::encrypt(const unsigned char *input, const int input_len) {
@@ -24,7 +19,7 @@ AESCrypterOutput AESCrypter::encrypt(const unsigned char *input, const int input
 
     /* Create and initialise the context */
     if(!(ctx = EVP_CIPHER_CTX_new()))
-        throw runtime_error("AESCrypter: encrypt() - EVP_CIPHER_CTX_new() failed");
+        throw std::runtime_error("AESCrypter: encrypt() - EVP_CIPHER_CTX_new() failed");
 
     /*
      * Initialise the encryption operation. IMPORTANT - ensure you use a key
@@ -34,14 +29,14 @@ AESCrypterOutput AESCrypter::encrypt(const unsigned char *input, const int input
      * is 128 bits
      */
     if(1 != EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
-        throw runtime_error("AESCrypter: encrypt() - EVP_EncryptInit_ex() failed");
+        throw std::runtime_error("AESCrypter: encrypt() - EVP_EncryptInit_ex() failed");
 
     /*
      * Provide the message to be encrypted, and obtain the encrypted output.
      * EVP_EncryptUpdate can be called multiple times if necessary
      */
     if(1 != EVP_EncryptUpdate(ctx, output.data, &len, input, input_len))
-        throw runtime_error("AESCrypter: encrypt() - EVP_EncryptUpdate() failed");
+        throw std::runtime_error("AESCrypter: encrypt() - EVP_EncryptUpdate() failed");
     output.data_len = len;
 
     /*
@@ -49,7 +44,7 @@ AESCrypterOutput AESCrypter::encrypt(const unsigned char *input, const int input
      * this stage.
      */
     if(1 != EVP_EncryptFinal_ex(ctx, output.data + len, &len))
-        throw runtime_error("AESCrypter: encrypt() - EVP_EncryptFinal_ex() failed");
+        throw std::runtime_error("AESCrypter: encrypt() - EVP_EncryptFinal_ex() failed");
 
     output.data_len += len;
 
@@ -70,7 +65,7 @@ AESCrypterOutput AESCrypter::decrypt(const unsigned char *input, const int input
 
     /* Create and initialise the context */
     if(!(ctx = EVP_CIPHER_CTX_new()))
-        throw runtime_error("AESCrypter: decrypt() - EVP_CIPHER_CTX_new() failed");
+        throw std::runtime_error("AESCrypter: decrypt() - EVP_CIPHER_CTX_new() failed");
 
     /*
      * Initialise the decryption operation. IMPORTANT - ensure you use a key
@@ -80,14 +75,14 @@ AESCrypterOutput AESCrypter::decrypt(const unsigned char *input, const int input
      * is 128 bits
      */
     if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
-        throw runtime_error("AESCrypter: decrypt() - EVP_DecryptInit_ex() failed");
+        throw std::runtime_error("AESCrypter: decrypt() - EVP_DecryptInit_ex() failed");
 
     /*
      * Provide the message to be decrypted, and obtain the plaintext output.
      * EVP_DecryptUpdate can be called multiple times if necessary.
      */
     if(1 != EVP_DecryptUpdate(ctx, output.data, &len, input, input_len))
-        throw runtime_error("AESCrypter: decrypt() - EVP_DecryptUpdate() failed");
+        throw std::runtime_error("AESCrypter: decrypt() - EVP_DecryptUpdate() failed");
 
     output.data_len = len;
 
@@ -96,7 +91,7 @@ AESCrypterOutput AESCrypter::decrypt(const unsigned char *input, const int input
      * this stage.
      */
     if(1 != EVP_DecryptFinal_ex(ctx, output.data + len, &len))
-        throw runtime_error("AESCrypter: decrypt() - EVP_DecryptFinal_ex() failed");
+        throw std::runtime_error("AESCrypter: decrypt() - EVP_DecryptFinal_ex() failed");
     
     output.data_len += len;
 

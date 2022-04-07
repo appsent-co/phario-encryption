@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9.0)
 
-set (PACKAGE_NAME "cpp")
+set (PACKAGE_NAME "pharioencryption")
 set (BUILD_DIR ./build)
 
 include_directories(
@@ -29,6 +29,7 @@ if (EXISTS "${LIBRN_DIR}/libjsi.so")
           ${PACKAGE_NAME}
           SHARED
           ../cpp/phario-encryption.cpp
+          ../cpp/aes-crypter.cpp
           ./cpp-adapter.cpp
   )
 else()
@@ -55,6 +56,8 @@ find_library(
         NO_CMAKE_FIND_ROOT_PATH
 )
 
+find_package(openssl REQUIRED CONFIG)
+
 set_target_properties(
         ${PACKAGE_NAME} PROPERTIES
         CXX_STANDARD 17
@@ -67,5 +70,7 @@ target_link_libraries(
         ${LOG_LIB}
         ${REACT_NATIVE_JNI_LIB}
         ${JSI_LIB}
+        openssl::ssl
+        openssl::crypto
         android
 )

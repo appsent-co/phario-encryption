@@ -27,7 +27,7 @@ public class PharioEncryptionModule extends ReactContextBaseJavaModule {
     @ReactMethod(isBlockingSynchronousMethod = true)
     public boolean install() {
         try {
-            System.loadLibrary("cpp");
+            System.loadLibrary("pharioencryption");
 
             ReactApplicationContext context = getReactApplicationContext();
             installPharioEncryption(
