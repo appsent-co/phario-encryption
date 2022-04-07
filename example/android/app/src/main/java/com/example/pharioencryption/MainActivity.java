@@ -1,4 +1,4 @@
-package com.example.appsentcopharioencryption;
+package com.example.pharioencryption;
 
 import com.facebook.react.ReactActivity;
 

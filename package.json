@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "appsent-co-phario-encryption.podspec",
+    "phario-encryption.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",

@@ -1,4 +1,4 @@
-package com.appsentcopharioencryption;
+package com.pharioencryption;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +12,8 @@ import com.facebook.react.module.annotations.ReactModule;
 public class PharioEncryptionModule extends ReactContextBaseJavaModule {
     public static final String NAME = "PharioEncryption";
 
+    private native void installPharioEncryption(long jsiPtr);
+
     public PharioEncryptionModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
@@ -22,20 +24,18 @@ public class PharioEncryptionModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
-    static {
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    public boolean install() {
         try {
-            // Used to load the 'native-lib' library on application startup.
             System.loadLibrary("cpp");
-        } catch (Exception ignored) {
+
+            ReactApplicationContext context = getReactApplicationContext();
+            installPharioEncryption(
+                context.getJavaScriptContextHolder().get()
+            );
+            return true;
+        } catch (Exception exception) {
+            return false;
         }
     }
-
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    public void multiply(int a, int b, Promise promise) {
-        promise.resolve(nativeMultiply(a, b));
-    }
-
-    public static native int nativeMultiply(int a, int b);
 }

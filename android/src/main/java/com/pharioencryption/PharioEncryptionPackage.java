@@ -1,4 +1,4 @@
-package com.appsentcopharioencryption;
+package com.pharioencryption;
 
 import androidx.annotation.NonNull;
 

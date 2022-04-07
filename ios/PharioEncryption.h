@@ -1,11 +1,8 @@
 #import <React/RCTBridgeModule.h>
-
-#ifdef __cplusplus
-
-#import "appsent-co-phario-encryption.h"
-
-#endif
+#import "phario-encryption.h"
 
 @interface PharioEncryption : NSObject <RCTBridgeModule>
+
+@property (nonatomic, assign) BOOL setBridgeOnMainQueue;
 
 @end

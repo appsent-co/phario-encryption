@@ -1,8 +1,14 @@
 #include <jni.h>
-#include "example.h"
+#include "phario-encryption.h"
 
-extern "C"
-JNIEXPORT jint JNICALL
-Java_com_appsentcopharioencryption_PharioEncryptionModule_nativeMultiply(JNIEnv *env, jclass type, jint a, jint b) {
-    return example::multiply(a, b);
+extern "C" JNIEXPORT void JNICALL
+Java_com_pharioencryption_PharioEncryptionModule_installPharioEncryption(JNIEnv *env, jclass clazz, jlong jsiPtr)
+{
+  installPharioEncryption(*reinterpret_cast<facebook::jsi::Runtime *>(jsiPtr));
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_pharioencryption_PharioEncryptionModule_destruct(JNIEnv *env, jclass clazz)
+{
+  cleanUpPharioEncryption();
 }
