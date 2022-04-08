@@ -1,5 +1,5 @@
-#ifndef DFS_SSL_CRYPTER_H
-#define DFS_SSL_CRYPTER_H
+#ifndef PHARIO_AES_H
+#define PHARIO_AES_H
 
 #include <string>
 

@@ -24,8 +24,23 @@ declare global {
   ): ArrayBuffer;
 
   function secureGenRandomBytes(keySize: number): ArrayBuffer;
-}
 
+  function hkdf(
+    key: ArrayBuffer,
+    salt: ArrayBuffer,
+    info: ArrayBuffer,
+    keySize: number
+  ): ArrayBuffer;
+
+  function pbkdf2(
+    password: ArrayBuffer,
+    salt: ArrayBuffer,
+    outputSize: number,
+    iterations: number
+  ): ArrayBuffer;
+}
 export const encryptAES = global.encryptAES;
 export const decryptAES = global.decryptAES;
 export const secureGenRandomBytes = global.secureGenRandomBytes;
+export const hkdf = global.hkdf;
+export const pbkdf2 = global.pbkdf2;

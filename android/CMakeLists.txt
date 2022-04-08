@@ -29,7 +29,7 @@ if (EXISTS "${LIBRN_DIR}/libjsi.so")
           ${PACKAGE_NAME}
           SHARED
           ../cpp/phario-encryption.cpp
-          ../cpp/aes-crypter.cpp
+          ../cpp/aes.cpp
           ./cpp-adapter.cpp
   )
 else()
