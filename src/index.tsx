@@ -9,38 +9,39 @@ if (PharioEncryptionModule) {
   }
 }
 
-// global declaration
-declare global {
-  function encryptAES(
+interface PharioEncryption {
+  encryptAES(
     input: ArrayBuffer,
     key: ArrayBuffer,
     iv: ArrayBuffer
   ): ArrayBuffer;
 
-  function decryptAES(
+  decryptAES(
     input: ArrayBuffer,
     key: ArrayBuffer,
     iv: ArrayBuffer
   ): ArrayBuffer;
 
-  function secureGenRandomBytes(keySize: number): ArrayBuffer;
+  secureGenRandomBytes(keySize: number): ArrayBuffer;
 
-  function hkdf(
+  hkdf(
     key: ArrayBuffer,
     salt: ArrayBuffer,
     info: ArrayBuffer,
     keySize: number
   ): ArrayBuffer;
 
-  function pbkdf2(
+  pbkdf2(
     password: ArrayBuffer,
     salt: ArrayBuffer,
     outputSize: number,
     iterations: number
   ): ArrayBuffer;
 }
-export const encryptAES = global.encryptAES;
-export const decryptAES = global.decryptAES;
-export const secureGenRandomBytes = global.secureGenRandomBytes;
-export const hkdf = global.hkdf;
-export const pbkdf2 = global.pbkdf2;
+
+// global declaration
+declare global {
+  function pharioEncryptionCreateNewInstance(): PharioEncryption;
+}
+
+export default global.pharioEncryptionCreateNewInstance();

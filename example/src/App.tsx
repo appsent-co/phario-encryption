@@ -1,13 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import {
-  encryptAES,
-  decryptAES,
-  secureGenRandomBytes,
-  hkdf,
-  pbkdf2,
-} from '@appsent-co/phario-encryption';
+import PharioEncryption from '@appsent-co/phario-encryption';
 
 export default function App() {
   const [aesResult, setAesResult] = React.useState<string | undefined>();
@@ -32,12 +26,12 @@ export default function App() {
   }
 
   React.useEffect(() => {
-    const key = secureGenRandomBytes(32);
-    const iv = secureGenRandomBytes(16);
+    const key = PharioEncryption.secureGenRandomBytes(32);
+    const iv = PharioEncryption.secureGenRandomBytes(16);
 
     const data = str2ab('Hello, world!');
-    const encryptedData = encryptAES(data, key, iv);
-    const decryptedData = decryptAES(encryptedData, key, iv);
+    const encryptedData = PharioEncryption.encryptAES(data, key, iv);
+    const decryptedData = PharioEncryption.decryptAES(encryptedData, key, iv);
 
     const salt = new Uint8Array(
       '30259b72ccbc6d3dbcdb76d206f10006'
@@ -49,8 +43,8 @@ export default function App() {
     const password = str2ab('guess-magpie-homeland-quanta');
     const info = str2ab('PBES2g-HS256');
 
-    const hkdfResult = hkdf(salt, email, info, 32);
-    const pbkResult = pbkdf2(password, hkdfResult, 32, 100000);
+    const hkdfResult = PharioEncryption.hkdf(salt, email, info, 32);
+    const pbkResult = PharioEncryption.pbkdf2(password, hkdfResult, 32, 100000);
     console.log(pbkResult.byteLength);
     // new TextEncoder().encode('Test string');
 

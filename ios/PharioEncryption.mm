@@ -27,7 +27,6 @@ RCT_EXPORT_MODULE()
 }
 
 - (void)invalidate {
-  cleanUpPharioEncryption();
 }
 
 @end

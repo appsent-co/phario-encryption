@@ -6,9 +6,3 @@ Java_com_pharioencryption_PharioEncryptionModule_installPharioEncryption(JNIEnv 
 {
   installPharioEncryption(*reinterpret_cast<facebook::jsi::Runtime *>(jsiPtr));
 }
-
-extern "C" JNIEXPORT void JNICALL
-Java_com_pharioencryption_PharioEncryptionModule_destruct(JNIEnv *env, jclass clazz)
-{
-  cleanUpPharioEncryption();
-}
