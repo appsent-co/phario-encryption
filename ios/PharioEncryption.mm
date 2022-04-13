@@ -5,25 +5,28 @@
 
 @implementation PharioEncryption
 
-@synthesize bridge=_bridge;
-@synthesize methodQueue = _methodQueue;
-
 RCT_EXPORT_MODULE()
 
-+ (BOOL)requiresMainQueueSetup {
-  return YES;
-}
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
+{
+    NSLog(@"Installing global.pharioEncryptionCreateNewInstance...");
+    RCTBridge* bridge = [RCTBridge currentBridge];
+    RCTCxxBridge* cxxBridge = (RCTCxxBridge*)bridge;
+    if (cxxBridge == nil) {
+        return @false;
+    }
+    
+    using namespace facebook;
+    
+    auto jsiRuntime = (jsi::Runtime*) cxxBridge.runtime;
+    if (jsiRuntime == nil) {
+        return @false;
+    }
+    auto& runtime = *jsiRuntime;
 
-- (void)setBridge:(RCTBridge *)bridge {
-  _bridge = bridge;
-  _setBridgeOnMainQueue = RCTIsMainQueue();
-
-  RCTCxxBridge *cxxBridge = (RCTCxxBridge *)self.bridge;
-  if (!cxxBridge.runtime) {
-    return;
-  }
-
-  installPharioEncryption(*(facebook::jsi::Runtime *)cxxBridge.runtime);
+    installPharioEncryption(runtime);
+    
+    return @true;
 }
 
 - (void)invalidate {

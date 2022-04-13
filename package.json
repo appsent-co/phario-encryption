@@ -1,6 +1,6 @@
 {
   "name": "@appsent-co/phario-encryption",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A encryption library for the Phario app",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
