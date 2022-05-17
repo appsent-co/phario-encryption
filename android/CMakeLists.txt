@@ -30,6 +30,8 @@ if (EXISTS "${LIBRN_DIR}/libjsi.so")
           SHARED
           ../cpp/phario-encryption.cpp
           ../cpp/aes.cpp
+          ../cpp/hkdf.cpp
+          ../cpp/pbkdf2.cpp
           ./cpp-adapter.cpp
   )
 else()
@@ -40,6 +42,9 @@ else()
           SHARED
           ../../react-native/ReactCommon/jsi/jsi/jsi.cpp
           ../cpp/phario-encryption.cpp
+          ../cpp/aes.cpp
+          ../cpp/hkdf.cpp
+          ../cpp/pbkdf2.cpp
           ./cpp-adapter.cpp
   )
 endif()
